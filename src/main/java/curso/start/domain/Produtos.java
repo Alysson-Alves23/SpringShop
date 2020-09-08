@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class Produtos {
 
@@ -19,17 +21,18 @@ public class Produtos {
 	private int id;
 	private String name;
 	private double value;
+	@JsonBackReference
 	@ManyToMany
-	 @JoinTable(name = "PRODUTO_CATEGORIA",
-	 joinColumns = @JoinColumn(name = "produto_id"),
-	 inverseJoinColumns = @JoinColumn(name = "categoria_id") )
+	@JoinTable(name = "PRODUTO_CATEGORIA",
+	joinColumns = @JoinColumn(name = "produto_id"),
+	inverseJoinColumns = @JoinColumn(name = "categoria_id") )
 	private List<Categorie> categorias=new ArrayList<>();
 	public Produtos(String name, double value) {
 		this.name=name;
 		this.value=value;
 	}
 	public Produtos() {
-		
+
 	}
 	public int getId() {
 		return id;
@@ -50,8 +53,8 @@ public class Produtos {
 		result = prime * result + id;
 		return result;
 	}
-	
-	
+
+
 	public double getValue() {
 		return value;
 	}
@@ -77,5 +80,5 @@ public class Produtos {
 			return false;
 		return true;
 	}
-	
+
 }

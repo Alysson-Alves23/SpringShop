@@ -9,17 +9,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class Categorie implements Serializable{
-	
+
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	@JsonManagedReference
 	@ManyToMany(mappedBy="categorias")
 	private List<Produtos> produtos = new ArrayList<>(); 
 
@@ -27,7 +30,7 @@ public class Categorie implements Serializable{
 		this.name=name;
 	}
 	public Categorie() {
-		
+
 	}
 	public int getId() {
 		return id;
@@ -67,6 +70,6 @@ public class Categorie implements Serializable{
 	public void setProdutos(List<Produtos> produtos) {
 		this.produtos = produtos;
 	}
-	
+
 
 }

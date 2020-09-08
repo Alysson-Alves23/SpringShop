@@ -25,19 +25,27 @@ public class CategoriesResource {
 	CategorieService service;
 	
 	@GetMapping(value = "/{id}" )
-	public ResponseEntity<Categorie> find(@PathVariable int id) {
-		
-		
-		return new ResponseEntity<Categorie>(service.findByid(id),HttpStatus.OK);
+	public ResponseEntity<?> find(@PathVariable int id) {
+		Categorie cat= service.findByid(id);
+		if(cat != null) {
+			return new ResponseEntity<>(cat, HttpStatus.OK);
+					}else {
+						return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+						}
+					
 	}
 	@GetMapping
-	public ResponseEntity<List> findAll(){
+	public ResponseEntity<?> findAll(){
 		
-		List<Categorie> opt= new ArrayList<Categorie>();
-				service.listAll().forEach(i -> opt.add(i));
-		
-		return new ResponseEntity<List>(opt, HttpStatus.OK);
-	}
+		List<Categorie> opt= new ArrayList<>();
+		Iterable<Categorie> opc= service.listAll();
+		opc.forEach(i -> opt.add(i));
+				if(!(opt.isEmpty())) {
+		return new ResponseEntity<>(opt, HttpStatus.OK);
+				}else {
+					return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+					}
+				}
 	@PostMapping
 	public ResponseEntity<?> create(@RequestParam Categorie cat){
 		
