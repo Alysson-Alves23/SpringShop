@@ -1,6 +1,5 @@
 package curso.start.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,25 +7,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 @Entity
-public class Categorie implements Serializable{
-	
+public class Produtos {
 
-	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	@ManyToMany(mappedBy="categorias")
-	private List<Produtos> produtos = new ArrayList<>(); 
-
-	public Categorie(String name) {
+	private double value;
+	@ManyToMany
+	 @JoinTable(name = "PRODUTO_CATEGORIA",
+	 joinColumns = @JoinColumn(name = "produto_id"),
+	 inverseJoinColumns = @JoinColumn(name = "categoria_id") )
+	private List<Categorie> categorias=new ArrayList<>();
+	public Produtos(String name, double value) {
 		this.name=name;
+		this.value=value;
 	}
-	public Categorie() {
+	public Produtos() {
 		
 	}
 	public int getId() {
@@ -48,6 +50,20 @@ public class Categorie implements Serializable{
 		result = prime * result + id;
 		return result;
 	}
+	
+	
+	public double getValue() {
+		return value;
+	}
+	public void setValue(double value) {
+		this.value = value;
+	}
+	public List<Categorie> getCategorias() {
+		return categorias;
+	}
+	public void setCategorias(List<Categorie> categorias) {
+		this.categorias = categorias;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -56,17 +72,10 @@ public class Categorie implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorie other = (Categorie) obj;
+		Produtos other = (Produtos) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-	public List<Produtos> getProdutos() {
-		return produtos;
-	}
-	public void setProdutos(List<Produtos> produtos) {
-		this.produtos = produtos;
-	}
 	
-
 }
