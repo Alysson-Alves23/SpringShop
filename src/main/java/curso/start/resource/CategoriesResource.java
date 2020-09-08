@@ -38,14 +38,12 @@ public class CategoriesResource {
 	public ResponseEntity<?> findAll(){
 		
 		List<Categorie> opt= new ArrayList<>();
-		Iterable<Categorie> opc= service.listAll();
-		opc.forEach(i -> opt.add(i));
-				if(!(opt.isEmpty())) {
+		
+		service.listAll().forEach(i -> opt.add(i));
+				
 		return new ResponseEntity<>(opt, HttpStatus.OK);
-				}else {
-					return new ResponseEntity<>( HttpStatus.NOT_FOUND);
-					}
-				}
+		}
+				
 	@PostMapping
 	public ResponseEntity<?> create(@RequestParam Categorie cat){
 		

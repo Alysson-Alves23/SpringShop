@@ -8,17 +8,20 @@ import org.springframework.stereotype.Service;
 
 import curso.start.domain.Categorie;
 import curso.start.repository.RepositoryCat;
-
+import curso.start.service.exceptions.ObjectNotFoundException;
 @Service
 public class CategorieService {
 	
 	@Autowired
 	RepositoryCat repo;
 	
-	public Categorie findByid(int id) {
-		 Optional<Categorie> cat= repo.findById(id);
-		 
-		 return cat.orElse(null);	
+	public Categorie findByid(int id) throws ObjectNotFoundException{
+			
+		Optional<Categorie> cat= repo.findById(id);
+		if(!cat.isEmpty()) { 
+		 return cat.orElse(null);
+		 }else {throw  new ObjectNotFoundException("Id "+id+" não encontrado"); }
+		
 	}
 	
 
