@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class Estado implements Serializable {
 
@@ -21,6 +23,7 @@ public class Estado implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 	String name;
+	@JsonBackReference
 	@OneToMany(mappedBy = "estado") 
 	List<Cidade> cidades = new ArrayList<>();
 	

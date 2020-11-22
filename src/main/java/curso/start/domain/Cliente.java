@@ -20,6 +20,8 @@ import javax.persistence.OneToMany;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import curso.start.domain.enums.TipoCliente;
 import ibge.IbgeApi;
 
@@ -39,13 +41,17 @@ public class Cliente implements Serializable{
 	private long cpf_cnpj;
 	private int tipo;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
-	private List<Endereco> endereco;
+	private List<Endereco> endereco= new ArrayList();
 	
 	@ElementCollection
 	@CollectionTable(name="telefone")
 	private Set<Long> telefones= new HashSet<>();
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos= new ArrayList();
 	public Cliente() {}
 	
 	public Cliente( String nome, String email, long cpf_cnpj, int tipo) {
@@ -113,6 +119,15 @@ public class Cliente implements Serializable{
 
 	public void setTelefones(Set<Long> telefones) {
 		this.telefones = telefones;
+	}
+	
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

@@ -18,6 +18,8 @@ import javax.persistence.OneToOne;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import ibge.IbgeApi;
 
 @Entity
@@ -38,6 +40,7 @@ public class Endereco implements Serializable {
 	@OneToOne
 	@JoinColumn(name= "cidade_id")
 	private Cidade cidade;
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name= "cliente_id")
 	private Cliente cliente;
